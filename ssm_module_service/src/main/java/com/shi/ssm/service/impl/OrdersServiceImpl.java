@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service("ordersService")
 @Transactional
-public class OrdersService implements IOrdersService {
+public class OrdersServiceImpl implements IOrdersService {
 
     @Autowired
     private IOrdersDao ordersDao;
@@ -26,5 +26,10 @@ public class OrdersService implements IOrdersService {
         //参数pageNum是页码值,pageSize是每页显示多少条数
         PageHelper.startPage(page,size);
         return ordersDao.findAll();
+    }
+
+    @Override
+    public Orders findById(String orderId) throws Exception{
+        return ordersDao.findById(orderId);
     }
 }

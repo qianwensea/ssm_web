@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Service(value = "productService")
 @Transactional
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IProductDao productDao;
