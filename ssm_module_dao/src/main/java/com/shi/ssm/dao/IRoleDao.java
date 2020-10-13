@@ -1,5 +1,6 @@
 package com.shi.ssm.dao;
 
+import com.shi.ssm.domain.Permission;
 import com.shi.ssm.domain.Role;
 import org.apache.ibatis.annotations.*;
 
@@ -49,14 +50,20 @@ public interface IRoleDao {
             @Result(property = "roleDesc",column = "roleDesc"),
             @Result(property = "permissions",column = "id",javaType = java.util.List.class,many = @Many(select = "com.shi.ssm.dao.IPermissionDao.findByRoleId"))
     })
-    Role findById(String roleId);
+    Role findById(String roleId) throws Exception;
 
     @Delete("delete from users_role where roleId=#{roleId}")
-    void deleteFromUser_RoleByRoleId(String roleId);
+    void deleteFromUser_RoleByRoleId(String roleId) throws Exception;
 
     @Delete("delete from role_permission where roleId=#{roleId}")
-    void deleteFromRole_PermissionByRoleId(String roleId);
+    void deleteFromRole_PermissionByRoleId(String roleId) throws Exception;
 
     @Delete("delete from role where id=#{roleId}")
-    void deleteFromRoleByRoleId(String roleId);
+    void deleteFromRoleByRoleId(String roleId) throws Exception;
+
+    @Select("select * from permission where id not in (select permissionId from role_permission where roleId = #{roleId})")
+    List<Permission> findOtherPermissions(String roleId) throws Exception;
+
+    @Insert("insert into role_permission(roleId,permissionId) values(#{roleId},#{permissionId})")
+    void addPermissionToRole(@Param("roleId") String roleId, @Param("permissionId") String permissionId) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.shi.ssm.service;
 
+import com.shi.ssm.domain.Permission;
 import com.shi.ssm.domain.Role;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface IRoleService {
     Role findById(String roleId) throws Exception;
 
     void deleteRole(String roleId) throws Exception;
+
+    void addPermissionToRole(String roleId, String[] permissionIds) throws Exception;
+
+    List<Permission> findOtherPermissions(String roleId) throws Exception;
 }

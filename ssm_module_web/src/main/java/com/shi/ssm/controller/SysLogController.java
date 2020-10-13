@@ -1,0 +1,31 @@
+package com.shi.ssm.controller;
+
+import com.shi.ssm.domain.SysLog;
+import com.shi.ssm.service.ISysLogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+/**
+ * @author 千文sea
+ * @create 2020-10-12 16:58
+ */
+@Controller
+@RequestMapping("/sysLog")
+public class SysLogController {
+
+    @Autowired
+    private ISysLogService sysLogService;
+
+    @RequestMapping("/findAll.do")
+    public ModelAndView findAll() throws Exception{
+        ModelAndView mv = new ModelAndView();
+        List<SysLog> sysLogList = sysLogService.findAll();
+        mv.addObject("sysLogs",sysLogList);
+        mv.setViewName("syslog-list");
+        return mv;
+    }
+}
